@@ -13,7 +13,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("home")  # wherever you want to send them after login
+            return redirect("dashboard")  # wherever you want to send them after login
         else:
             return render(request, "login.html", {"error": "Invalid credentials"})
     return render(request, "login.html")
+
+
+def dashboard_view(request):
+    return render(request, "dashboard.html",{"username": request.user.username})
