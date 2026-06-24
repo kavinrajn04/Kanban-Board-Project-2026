@@ -20,8 +20,5 @@ def login_view(request):
 
 
 def dashboard_view(request):
-    return render(request, "sidebar.html", {"username": request.user.username})
+    return render(request, "dashboard.html", {"username": request.user.username})
 
-
-def sidebar_view(request):
-    return render(request, "sidebar.html")
