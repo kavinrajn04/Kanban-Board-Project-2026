@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Oxygen:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oxygen:wght@300;400;700&display=swap"
         rel="stylesheet"
     />
     <style>
@@ -19,33 +19,35 @@
             height: 100dvh;
             font-family: var(--font-primary);
         }
-        .nav {
+        .sidebar {
             display: flex;
             flex-direction: column;
-            width: 300px;
             border-right: 1px solid hsl(0, 0%, 90%);
+            padding: 8px;
         }
         .profile {
-            padding: 25px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         .profile-name {
-            font-size: larger;
+            font-size: large;
             font-weight: bold;
         }
-        .add-notes {
-            margin-top: 10px;
-        }
         .settings-tab,
-        .add-notes {
-            font-size: small;
+        #add_notes {
+            font-family: var(--font-primary);
+            font-size: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            padding: 12px 18px;
             gap: 8px;
+            background-color: white;
+            border: none;
+            border-radius: 8px;
         }
         .settings-tab:hover,
-        .add-notes:hover {
+        #add_notes:hover {
             background-color: hsl(0, 0%, 96%);
         }
         .user-name {
@@ -55,28 +57,63 @@
             font-family: var(--font-primary);
             font-size: large;
         }
-        .content {
+        #content {
             flex: 1;
-            padding: 20px;
+            height: 100dvh;
             background-color: hsl(0, 0%, 96%);
+            padding: 10px;
+            box-sizing: border-box;
         }
         .nav-bottom {
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             margin-top: auto;
-            margin-bottom: 20px;
+        }
+
+        .note-card {
+            background-color: hsl(0, 0%, 96%);
+            font-size: medium;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-title,
+        .editor-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .card-date {
+            font-size: 10px;
+            color: hsl(0, 0%, 40%);
+        }
+        .card-preview {
+            font-size: 10px;
+        }
+        .text-area textarea {
+            resize: none;
+            height: 100%;
+            width: 100%;
+            outline: none;
+            font-size: 14px;
+            box-sizing: border-box;
+            border: none;
+            margin-left: 10px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="nav">
+    <div class="sidebar">
         <div class="profile">
             <span class="profile-name">Welcome back, {{username}}!</span>
-            <br />
-            <span class="user-name"></span>
         </div>
-        <div class="add-notes">
+
+        <button id="add_notes">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -93,9 +130,14 @@
                 <path d="M12 5v14" />
             </svg>
             <span>Add Notes</span>
+        </button>
+
+        <div class="notes-list" id="notesList">
+            <!-- Cards will go here -->
         </div>
+
         <div class="nav-bottom">
-            <div class="settings-tab">
+            <button class="settings-tab">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -114,11 +156,69 @@
                     <circle cx="12" cy="12" r="4" />
                 </svg>
                 <span class="settings">Settings</span>
-            </div>
+            </button>
         </div>
     </div>
-    <div class="content"></div>
+
+    <div id="content">
+        <!-- content goes here -->
+    </div>
+
     <script>
-        
+        const notesList = document.getElementById("notesList")
+        const content = document.getElementById("content")
+        // Unique ID like 1719235200000
+        add_notes.addEventListener("click", () => {
+            // ... code creates newNote ...
+            const noteId = Date.now()
+            const newNote = {
+                id: noteId,
+                title: "Untitled",
+                content: "",
+                date: new Date().toLocaleDateString(),
+            }
+            // console.log(newNote["id"], newNote["date"])
+            // This function is CALLED with newNote as argument
+            card_ui = createNoteCard(newNote)
+            notesList.appendChild(card_ui)
+            content_ui = createNote(newNote)
+            content.appendChild(content_ui)
+        })
+
+        function createNoteCard(note) {
+            // Get the first 50 characters (preview)
+            const preview = note.content.substring(0, 50) || "No content yet..."
+
+            // Create the card
+            const card = document.createElement("div")
+            card.className = "note-card"
+            card.id = `note-${note.id}`
+
+            // Add content to the card
+            card.innerHTML = `
+            <div class="card-header">
+                <div class="card-title">${note.title}</div>
+                <div class="card-date">${note.date}</div>
+            </div>
+            <div class="card-preview">${preview}</div>
+          `
+
+            return card
+        }
+
+        function createNote(note) {
+            const editor = document.createElement("div")
+            editor.id = "editor"
+
+            editor.innerHTML = `
+            <div class = "editor-title">
+                ${note.title}
+            </div>
+            <div class = "text-area">
+                <textarea placeholder=""></textarea>
+            </div>
+            `
+            return editor
+        }
     </script>
 </body>
