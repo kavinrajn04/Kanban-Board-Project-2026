@@ -5,6 +5,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Oxygen:wght@300;400;700&display=swap"
+            rel="stylesheet"
+        />
         <style>
             :root {
                 --color-primary: hsl(211, 100%, 50%);
@@ -14,7 +20,7 @@
                 --color-border: #d8dadf;
                 --color-border-focus: hsl(211, 100%, 50%);
                 --radius: 10px;
-                --font-sans: "Arial";
+                --font-sans: "Oxygen";
             }
 
             * {
@@ -27,7 +33,7 @@
                 flex-direction: column;
                 min-height: 100vh;
                 font-family: var(--font-sans);
-                background-color: white;
+                background-color: hsl(0, 0%, 98%);
                 color: var(--color-text);
             }
 
@@ -37,12 +43,12 @@
                 padding: 10px 20px;
                 gap: 4px;
             }
-        
+
             .logo {
                 font-family: var(--font-sans);
                 color: black;
                 font-size: 28px;
-                font-weight: 500;
+                font-weight: 700;
                 letter-spacing: -0.02em;
             }
 
@@ -56,10 +62,10 @@
 
             .login-card {
                 width: 100%;
-                max-width: 320px;
+                max-width: 360px;
                 background: #fff;
-                box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-                padding: 32px 28px;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                padding: 40px 32px;
                 border-radius: var(--radius);
                 display: flex;
                 flex-direction: column;
@@ -134,25 +140,7 @@
     </head>
     <body>
         <div class="top-bar">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#0061ff"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-layers-icon lucide-layers"
-            >
-                <path
-                    d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"
-                />
-                <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" />
-                <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" />
-            </svg>
-            <span class="logo">Stak</span>
+            <span class="logo">Scribe</span>
         </div>
 
         <div class="main">

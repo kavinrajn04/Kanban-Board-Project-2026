@@ -1,0 +1,124 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Oxygen:wght@300;400;700&display=swap"
+        rel="stylesheet"
+    />
+    <style>
+        :root {
+            --font-primary: "Oxygen";
+        }
+        body {
+            margin: 0;
+            display: flex;
+            height: 100dvh;
+            font-family: var(--font-primary);
+        }
+        .nav {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            border-right: 1px solid hsl(0, 0%, 90%);
+        }
+        .profile {
+            padding: 25px 25px;
+        }
+        .profile-name {
+            font-size: larger;
+            font-weight: bold;
+        }
+        .add-notes {
+            margin-top: 10px;
+        }
+        .settings-tab,
+        .add-notes {
+            font-size: small;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            gap: 8px;
+        }
+        .settings-tab:hover,
+        .add-notes:hover {
+            background-color: hsl(0, 0%, 96%);
+        }
+        .user-name {
+            font-size: large;
+        }
+        .notes-title {
+            font-family: var(--font-primary);
+            font-size: large;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: hsl(0, 0%, 96%);
+        }
+        .nav-bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="profile">
+            <span class="profile-name">Welcome back, {{username}}!</span>
+            <br />
+            <span class="user-name"></span>
+        </div>
+        <div class="add-notes">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#444444"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-plus-icon lucide-plus"
+            >
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+            </svg>
+            <span>Add Notes</span>
+        </div>
+        <div class="nav-bottom">
+            <div class="settings-tab">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#444444"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-bolt-icon lucide-bolt"
+                >
+                    <path
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                    />
+                    <circle cx="12" cy="12" r="4" />
+                </svg>
+                <span class="settings">Settings</span>
+            </div>
+        </div>
+    </div>
+    <div class="content"></div>
+    <script>
+        
+    </script>
+</body>
