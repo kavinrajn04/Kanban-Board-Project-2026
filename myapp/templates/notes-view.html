@@ -22,6 +22,7 @@
         .sidebar {
             display: flex;
             flex-direction: column;
+            width: 220px;
             border-right: 1px solid hsl(0, 0%, 90%);
             padding: 8px;
         }
@@ -29,6 +30,8 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            padding: 8px;
+            margin-bottom: 10px;
         }
         .profile-name {
             font-size: large;
@@ -70,12 +73,19 @@
             justify-content: flex-end;
             margin-top: auto;
         }
-
+        #notesList {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
         .note-card {
             background-color: hsl(0, 0%, 96%);
             font-size: medium;
             border-radius: 8px;
             cursor: pointer;
+            padding: 8px;
+            border: none;
         }
         .card-header {
             display: flex;
@@ -102,8 +112,8 @@
             font-size: 14px;
             box-sizing: border-box;
             border: none;
-            margin-left: 10px;
-            padding: 10px;
+            padding: 20px;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -132,7 +142,7 @@
             <span>Add Notes</span>
         </button>
 
-        <div class="notes-list" id="notesList">
+        <div id="notesList">
             <!-- Cards will go here -->
         </div>
 
@@ -161,13 +171,16 @@
     </div>
 
     <div id="content">
-        <!-- content goes here -->
+        <div id="note_title_id"></div>
+        <div class="text-area">
+            <textarea id="text_value"></textarea>
+        </div>
     </div>
 
     <script>
         const notesList = document.getElementById("notesList")
         const content = document.getElementById("content")
-        // Unique ID like 1719235200000
+
         add_notes.addEventListener("click", () => {
             // ... code creates newNote ...
             const noteId = Date.now()
@@ -181,8 +194,16 @@
             // This function is CALLED with newNote as argument
             card_ui = createNoteCard(newNote)
             notesList.appendChild(card_ui)
-            content_ui = createNote(newNote)
-            content.appendChild(content_ui)
+            updateTitle(newNote)
+
+            fetch("/notes/save/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newNote),
+            })
+                .then((response) => response.json())
+                .then((data) => console.log("Saved:", data))
+                .catch((error) => console.error("Error:", error))
         })
 
         function createNoteCard(note) {
@@ -190,7 +211,7 @@
             const preview = note.content.substring(0, 50) || "No content yet..."
 
             // Create the card
-            const card = document.createElement("div")
+            const card = document.createElement("button")
             card.className = "note-card"
             card.id = `note-${note.id}`
 
@@ -206,19 +227,12 @@
             return card
         }
 
-        function createNote(note) {
-            const editor = document.createElement("div")
-            editor.id = "editor"
+        function updateTitle(note) {
+            const note_title = document.getElementById("note_title_id")
 
-            editor.innerHTML = `
-            <div class = "editor-title">
-                ${note.title}
-            </div>
-            <div class = "text-area">
-                <textarea placeholder=""></textarea>
-            </div>
+            note_title.innerHTML = `
+            <span class="note-title-span">${note.title}</span>
             `
-            return editor
         }
     </script>
 </body>

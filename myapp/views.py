@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Note
 
 # Create your views here.
 # myapp/views.py
@@ -21,3 +25,12 @@ def login_view(request):
 
 def notes_view(request):
     return render(request, "notes-view.html", {"username": request.user.username})
+
+
+@csrf_exempt
+def save_note(request):
+    data = json.loads(request.body)
+    note = Note.objects.create(
+        user=request.user, title=data["title"], content=data["content"]
+    )
+    return JsonResponse({"status": "ok", "note_id": note.id})
