@@ -1,238 +1,173 @@
-{% load static %}
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notes</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oxygen:wght@300;400;700&display=swap"
-        rel="stylesheet"
-    />
-    <style>
-        :root {
-            --font-primary: "Oxygen";
-        }
-        body {
-            margin: 0;
-            display: flex;
-            height: 100dvh;
-            font-family: var(--font-primary);
-        }
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            width: 220px;
-            border-right: 1px solid hsl(0, 0%, 90%);
-            padding: 8px;
-        }
-        .profile {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 8px;
-            margin-bottom: 10px;
-        }
-        .profile-name {
-            font-size: large;
-            font-weight: bold;
-        }
-        .settings-tab,
-        #add_notes {
-            font-family: var(--font-primary);
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: white;
-            border: none;
-            border-radius: 8px;
-        }
-        .settings-tab:hover,
-        #add_notes:hover {
-            background-color: hsl(0, 0%, 96%);
-        }
-        .user-name {
-            font-size: large;
-        }
-        .notes-title {
-            font-family: var(--font-primary);
-            font-size: large;
-        }
-        #content {
-            flex: 1;
-            height: 100dvh;
-            background-color: hsl(0, 0%, 96%);
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .nav-bottom {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            margin-top: auto;
-        }
-        #notesList {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .note-card {
-            background-color: hsl(0, 0%, 96%);
-            font-size: medium;
-            border-radius: 8px;
-            cursor: pointer;
-            padding: 8px;
-            border: none;
-        }
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .card-title,
-        .editor-title {
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .card-date {
-            font-size: 10px;
-            color: hsl(0, 0%, 40%);
-        }
-        .card-preview {
-            font-size: 10px;
-        }
-        .text-area textarea {
-            resize: none;
-            height: 100%;
-            width: 100%;
-            outline: none;
-            font-size: 14px;
-            box-sizing: border-box;
-            border: none;
-            padding: 20px;
-            border-radius: 8px;
-        }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <div class="profile">
-            <span class="profile-name">Welcome back, {{username}}!</span>
-        </div>
-
-        <button id="add_notes">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#444444"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-plus-icon lucide-plus"
-            >
-                <path d="M5 12h14" />
-                <path d="M12 5v14" />
-            </svg>
-            <span>Add Notes</span>
-        </button>
-
-        <div id="notesList">
-            <!-- Cards will go here -->
-        </div>
-
-        <div class="nav-bottom">
-            <button class="settings-tab">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#444444"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-bolt-icon lucide-bolt"
-                >
-                    <path
-                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-                    />
-                    <circle cx="12" cy="12" r="4" />
-                </svg>
-                <span class="settings">Settings</span>
-            </button>
-        </div>
-    </div>
-
-    <div id="content">
-        <div id="note_title_id"></div>
-        <div class="text-area">
-            <textarea id="text_value"></textarea>
-        </div>
-    </div>
-
-    <script>
-        const notesList = document.getElementById("notesList")
-        const content = document.getElementById("content")
-
-        add_notes.addEventListener("click", () => {
-            // ... code creates newNote ...
-            const noteId = Date.now()
-            const newNote = {
-                id: noteId,
-                title: "Untitled",
-                content: "",
-                date: new Date().toLocaleDateString(),
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Notes - Notes App</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                margin: 0;
+                min-height: 100vh;
             }
-            // console.log(newNote["id"], newNote["date"])
-            // This function is CALLED with newNote as argument
-            card_ui = createNoteCard(newNote)
-            notesList.appendChild(card_ui)
-            updateTitle(newNote)
+            #app {
+                display: flex;
+                height: 100vh;
+            }
+            #sidebar {
+                border-right: 1px solid hsl(0, 0%, 95%);
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            #sidebar-title {
+                display: flex;
+                font-family: Open Sans;
+                align-items: center;
+                justify-content: space-between;
+                padding: 4px;
+            }
+            #add-notes-btn {
+                cursor: pointer;
+                background-color: hsl(0, 0%, 95%);
+                border: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #add-notes-btn:hover {
+                background-color: hsl(0, 0%, 92%);
+            }
+            span {
+                font-family: Open Sans;
+                font-weight: 500;
+                font-size: 24px;
+            }
+            #notes-list {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            #note-item {
+                background-color: hsl(0, 0%, 95%);
+                border: none;
+                cursor: pointer;
+                padding: 6px;
+                border-radius: 10px;
+            }
+            .note-header {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .note-title {
+                font-family: Open Sans;
+                font-size: medium;
+                font-weight: 550;
+            }
+            .note-created {
+                font-family: Open Sans;
+                font-size: x-small;
+                font-weight: 400;
+            }
+            .note-preview {
+                font-family: Open Sans;
+                font-size: small;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <section id="sidebar">
+                <div id="sidebar-title">
+                    <span>Notes</span>
+                    <button id="add-notes-btn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#000000"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-plus-icon lucide-plus"
+                        >
+                            <path d="M5 12h14" />
+                            <path d="M12 5v14" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="notes-list">
+                    <div id="notes-empty" hidden>No notes yet. Click "+” to create one.</div>
+                </div>
+            </section>
+            <section id="editor"></section>
+        </div>
+        <script>
+            const notesList = document.getElementById("notes-list")
+            const notesEmpty = document.getElementById("notes-empty")
 
-            fetch("/notes/save/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(newNote),
+            function renderNotes(notes) {
+                notesList.innerHTML = ""
+                if (!Array.isArray(notes) || notes.length === 0) {
+                    notesEmpty.hidden = false
+                    return
+                }
+                notesEmpty.hidden = true
+
+                for (const note of notes) {
+                    const item = document.createElement("button")
+                    item.id = "note-item"
+                    item.innerHTML = `
+                        <div class="note-header">
+                            <div class="note-title">${note.title ?? "(no title)"}</div>
+                            <div class="note-created">${formatDateOnly(note.created_at) ?? ""}</div>
+                        </div>
+                        <div class="note-preview">${note.content_preview ?? ""}</div>
+                        `
+                    notesList.appendChild(item)
+                }
+            }
+
+            async function loadNotes() {
+                const res = await fetch("/api/notes/")
+                if (!res.ok) throw new Error("Failed to load notes")
+
+                const data = await res.json()
+
+                // If your backend returns { notes: [...] } instead of [...]
+                const notes = Array.isArray(data) ? data : (data.notes ?? [])
+
+                renderNotes(notes)
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                loadNotes().catch(() => {
+                    notesEmpty.hidden = false
+                    notesEmpty.textContent = "Could not load notes."
+                })
             })
-                .then((response) => response.json())
-                .then((data) => console.log("Saved:", data))
-                .catch((error) => console.error("Error:", error))
-        })
 
-        function createNoteCard(note) {
-            // Get the first 50 characters (preview)
-            const preview = note.content.substring(0, 50) || "No content yet..."
-
-            // Create the card
-            const card = document.createElement("button")
-            card.className = "note-card"
-            card.id = `note-${note.id}`
-
-            // Add content to the card
-            card.innerHTML = `
-            <div class="card-header">
-                <div class="card-title">${note.title}</div>
-                <div class="card-date">${note.date}</div>
-            </div>
-            <div class="card-preview">${preview}</div>
-          `
-
-            return card
-        }
-
-        function updateTitle(note) {
-            const note_title = document.getElementById("note_title_id")
-
-            note_title.innerHTML = `
-            <span class="note-title-span">${note.title}</span>
-            `
-        }
-    </script>
-</body>
+            function formatDateOnly(v) {
+                if (!v) return ""
+                const d = new Date(v)
+                if (Number.isNaN(d.getTime())) return ""
+                const dd = String(d.getDate()).padStart(2, "0")
+                const mm = String(d.getMonth() + 1).padStart(2, "0")
+                const yyyy = d.getFullYear()
+                return `${dd}-${mm}-${yyyy}`
+            }
+        </script>
+    </body>
+</html>
